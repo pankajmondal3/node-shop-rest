@@ -2,7 +2,7 @@
   "name": "rest-shop",
   "version": "1.0.0",
   "description": "A nodejs RESTful API Project",
-  "main": "index.js",
+  "main": "server.js",
   "engines":{
     "node": "8.11.1"
   },
