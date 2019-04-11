@@ -11,6 +11,7 @@ router.get('/userlist', (req, res, next)=>{
 
     User
         .find()
+        .select('_id email name phone')
         .exec()
         .then(user =>{ 
             
