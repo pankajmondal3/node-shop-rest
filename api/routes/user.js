@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-router.post('/userlist', (req, res, next)=>{
+router.get('/userlist', (req, res, next)=>{
 
     User
         .find()
