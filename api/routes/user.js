@@ -7,6 +7,35 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
+router.post('/userlist', (req, res, next)=>{
+
+    User
+        .find()
+        .exec()
+        .then(user =>{
+            if(user.length > 0){
+                return res.status(422).json({
+                    message: "Not found any user"
+                });
+            }else{
+                console.log(doc);                   
+                res.status(200).json({
+                    message: "All Users List",
+                    userDetails: user
+                });                 
+            }
+
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+
+    
+
+
+});
+
 router.post('/signup', (req, res, next)=>{
 
     User
