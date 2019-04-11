@@ -12,16 +12,18 @@ router.get('/userlist', (req, res, next)=>{
     User
         .find()
         .exec()
-        .then(user =>{ console.log(user);    
+        .then(user =>{ 
+            
+            console.log(user);    
             if(user.length > 0){
-                return res.status(422).json({
-                    message: "Not found any user"
-                });
-            }else{
-                //console.log(user);                   
                 res.status(200).json({
                     message: "All Users List",
                     userDetails: user
+                });  
+            }else{
+                //console.log(user);                   
+                return res.status(422).json({
+                    message: "Not found any user"
                 });                 
             }
 
