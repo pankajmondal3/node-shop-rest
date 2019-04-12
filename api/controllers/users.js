@@ -40,17 +40,16 @@ let id = req.params.userId
         .exec()
         .then(user =>{ 
             
-            console.log(user);    
-            if(user.length > 0){
+            //console.log(user);    
+            if(!user){
+                res.status(422).json({
+                    message: "Not found user details"
+                });  
+            }else{
                 res.status(200).json({
                     message: "User Details",
                     userDetails: user
                 });  
-            }else{
-                //console.log(user);                   
-                return res.status(422).json({
-                    message: "Not found user"
-                });                 
             }
 
         })
