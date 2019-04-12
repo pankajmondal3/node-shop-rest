@@ -16,6 +16,10 @@ router.post('/login', UserController.user_login)
 //delete user
 router.delete('/delete/:userId', checkAuth, UserController.user_delete)
 
+
+//get user for show
+router.get('/:userId', checkAuth, UserController.one_user_details_get)
+
 //get user for edit
 router.post('/edit/:userId', checkAuth, UserController.user_details_get)
 

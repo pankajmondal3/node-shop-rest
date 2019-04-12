@@ -31,6 +31,37 @@ exports.get_all_userlist =  (req, res, next)=> {
 }
 
 
+exports.one_user_details_get =  (req, res, next)=> {
+let id = req.params.userId
+
+    User
+        .findById(id)
+        .select('_id email name phone')
+        .exec()
+        .then(user =>{ 
+            
+            console.log(user);    
+            if(user.length > 0){
+                res.status(200).json({
+                    message: "User Details",
+                    userDetails: user
+                });  
+            }else{
+                //console.log(user);                   
+                return res.status(422).json({
+                    message: "Not found user"
+                });                 
+            }
+
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+}
+
+
+
 exports.user_signup = (req, res, next)=>{
 
     User
