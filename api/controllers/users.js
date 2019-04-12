@@ -122,14 +122,16 @@ exports.user_login =  (req, res, next) =>{
     .then(user =>{
         if(user.length < 1){
             return res.status(401).json({
-                message: 'Auth failed'
+                message:  'Auth failed',
+                Error: 'Please provide a valid email ID'                
             });
         }else{
 
             bcrypt.compare(req.body.password, user[0].password,(err, result) =>{
                 if(err){
                     return res.status(401).json({
-                        message: 'Auth failed'
+                        message:  'Auth failed',
+                        Error: 'Please provide a valid Password'  
                     });
                 }
 
