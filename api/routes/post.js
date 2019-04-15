@@ -52,7 +52,7 @@ router.get('/:postId', checkAuth, PostController.post_one_show)
 //get post for edit
 router.get('/edit/:postId', checkAuth, PostController.post_edit_details_get)
 
-//update post
-router.put('/edit/:postId', checkAuth, PostController.post_edit_details_save)
+//update post  patch
+router.patch('/edit/:postId',  checkAuth, upload.single('postImage'),  PostController.post_edit_save)
 
 module.exports = router;

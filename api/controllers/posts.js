@@ -5,11 +5,12 @@ const Post = require('../models/post');
 exports.post_create =   (req, res, next) =>{   
 
     console.log(req.file);
-
+    res.status(200).json(req.body);
+    
     const post = new Post({        
         title: req.body.title,
         content: req.body.content,
-        userPostID : req.body.userPostID,
+        userPostID: req.userData.userId, //userPostID : req.body.userPostID, 
         postImage: req.file.path
     });
 
@@ -27,8 +28,56 @@ exports.post_create =   (req, res, next) =>{
             res.status(500).json({error: err});
         });
 
+    
 
 }
+
+exports.post_edit_save = (req, res, nest) =>{
+    //console.log('ok')
+
+   const id= req.params.postId; 
+   let updateOpsVal = {};
+
+  //  const updateOps = {};
+
+    //return res.status(200).json(req.userData.userId);
+
+    // for(const ops of req.body){
+      //   updateOps[ops.propName] = ops.value;
+     //}
+
+     //console.log(updateOps)
+
+     if(req.file){
+        updateOpsVal = {title: req.body.title, content: req.body.content, userPostID: req.userData.userId, postImage: req.file.path}
+
+       // res.status(200).json('ok');
+     }
+     else{
+        updateOpsVal = {title: req.body.title, content: req.body.content, userPostID: req.userData.userId}
+
+        //res.status(200).json('no');
+     }
+
+    
+    //Product.update( { _id: id } , { $set: {name: req.body.name, price: req.body.price} });
+    Post
+        //.update( { _id: id } , { $set: {title: req.body.title, content: req.body.content, postImage: req.file.path} })
+        .update( { _id: id } , { $set: updateOpsVal })
+        .exec()
+        .then(doc =>{
+            console.log(doc);
+            res.status(200).json({"Post Update ":updateOpsVal});
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+    
+    
+}
+
+
 
 exports.post_delete = (req, res, nest) =>{
     
@@ -114,29 +163,5 @@ exports.post_edit_details_get =  (req, res, nest) =>{
             res.status(500).json({error: err});
         });
  
-}
-
-exports.post_edit_details_save = (req, res, nest) =>{
-    const id= req.params.postId;
-    const updateOps = {};
-
-    for(const ops of req.body){
-        updateOps[ops.propName] = ops.value;
-    }
-
-    //Product.update( { _id: id } , { $set: {name: req.body.name, price: req.body.price} });
-    Post
-    .update( { _id: id } , { $set: updateOps })
-    .exec()
-    .then(doc =>{
-        console.log(doc);
-        res.status(200).json({"Post Update ":doc});
-    })
-    .catch(err =>{
-        console.log(err);
-        res.status(500).json({error: err});
-    });
-
-
 }
 
