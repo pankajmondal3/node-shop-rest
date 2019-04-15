@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/user');
+const postRoutes = require('./api/routes/post');
 
 mongoose.connect('mongodb+srv://pankaj:'+ process.env.MONGO_ATLAS_PW +'@mongo-node-c9vw2.mongodb.net/node-mongoose?retryWrites=true', { useNewUrlParser: true });
 
@@ -34,6 +35,7 @@ app.use((req,res,next) =>{
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
 app.use((req, res, next) =>{
     const error = new Error('Page Not found ');
     error.status = 404;
