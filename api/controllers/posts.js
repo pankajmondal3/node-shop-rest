@@ -38,7 +38,7 @@ exports.post_delete = (req, res, nest) =>{
         .exec()
         .then(doc =>{
             console.log(doc);
-            res.status(200).json(doc);
+            res.status(200).json({message: 'delete success'});
         })
         .catch(err =>{
             console.log(err);
