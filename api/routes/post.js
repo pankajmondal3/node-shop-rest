@@ -50,7 +50,7 @@ router.delete('/delete/:postId', checkAuth, PostController.post_delete)
 router.get('/:postId', checkAuth, PostController.post_one_show)
 
 //get post for edit
-router.post('/edit/:postId', checkAuth, PostController.post_edit_details_get)
+router.get('/edit/:postId', checkAuth, PostController.post_edit_details_get)
 
 //update post
 router.put('/edit/:postId', checkAuth, PostController.post_edit_details_save)
