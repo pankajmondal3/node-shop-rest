@@ -37,7 +37,7 @@ const upload = multer({
 
 
 //all post show
-router.get('/allpost', checkAuth, PostController.post_all);
+router.get('/allpost', PostController.post_all);
 
 //create post
 router.post('/create', checkAuth, upload.single('postImage'), PostController.post_create);
