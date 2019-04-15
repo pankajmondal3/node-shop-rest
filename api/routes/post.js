@@ -47,7 +47,7 @@ router.delete('/delete/:postId', checkAuth, PostController.post_delete)
 
 
 //One post show
-router.get('/:postId', ostController.post_one_show)
+router.get('/:postId', PostController.post_one_show)
 
 //get post for edit
 router.get('/edit/:postId', checkAuth, PostController.post_edit_details_get)
