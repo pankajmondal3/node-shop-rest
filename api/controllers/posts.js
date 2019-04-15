@@ -126,7 +126,7 @@ exports.post_edit_details_save = (req, res, nest) =>{
 
     //Product.update( { _id: id } , { $set: {name: req.body.name, price: req.body.price} });
     Post
-    .update( { _id: id } , { $set: updateOps }, {new:true})
+    .update( { _id: id } , { $set: updateOps })
     .exec()
     .then(doc =>{
         console.log(doc);
