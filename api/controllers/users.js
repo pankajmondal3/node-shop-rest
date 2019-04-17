@@ -330,7 +330,7 @@ exports.user_reset_password =  (req, res, next)=> {
                                 }                            
                                     
                                 let mailOptions = {
-                                    from: '"Admin" pkmondal@aapnainfotech.com',
+                                    from: '"Admin" pkmondal@aapnainfotech.com, nmahato@aapnainfotech.in',
                                     to: user[0].email,
                                     subject: 'Reset your account password',
                                     html: '<p>Hi, <b>'+ changeCase.titleCase(user[0].name) +'</b></p>' +
@@ -443,7 +443,7 @@ exports.user_store_password = (req, res) =>{//handles the new password from reac
                                     else {
 
                                         let mailOptions = {
-                                            from: '"Admin" pkmondal@aapnainfotech.com',
+                                            from: '"Admin" pkmondal@aapnainfotech.com, nmahato@aapnainfotech.in',
                                             to: userdata.email,
                                             subject: 'Password Updated',
                                             html: '<p>Hi, <b>'+ changeCase.titleCase(userdata.name) +'</b></p>' +
