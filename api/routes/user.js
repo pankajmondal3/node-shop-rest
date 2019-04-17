@@ -26,4 +26,9 @@ router.post('/edit/:userId', checkAuth, UserController.user_details_get)
 //update user
 router.put('/edit/:userId', checkAuth, UserController.user_update)
 
+//password reset
+router.post('/reset-password', UserController.user_reset_password)
+
+router.post('/store-password', UserController.user_store_password)
+
 module.exports = router;
