@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Post = require('../models/post');
-
+const User = require('../models/user')
 
 exports.post_create =   (req, res, next) =>{   
 
@@ -102,10 +102,44 @@ exports.post_all =  (req, res, next) =>{
     Post
     .find()
     .exec()
-    .then(doc =>{
-        console.log(doc);
+    .then(async doc =>{
+        //console.log(doc);
         if(doc.length > 0){
-            res.status(200).json(doc);
+
+            //Add User Details with Return Post Object
+            let promises = doc.map(async p => {
+                    
+                let id = p.userPostID              
+
+                let response = await User
+                                        .find({ _id: id},{ _id: 0 })
+                                        .select('email name phone')
+                                        .exec()
+                                        .then(user =>{ 
+                                            
+                                            console.log(user);    
+                                            if(user.length > 0){
+                                                return user  
+                                            }else{
+                                                return "Not found User details"
+                                            }                        
+                                        })
+                                        .catch(err =>{
+                                            console.log(err);
+                                            return res.status(500).json({error: err});
+                                        });                    
+
+                return { ...p._doc, userDetails : response }
+            })
+
+            // wait until all promises resolve
+            let results = await Promise.all(promises)
+
+           //console.log(results);
+            res.status(200).json(results);
+
+            //res.status(200).json(doc);
+
         }else{
             res.status(404).json({message : "No Post found"});
         }
@@ -126,10 +160,39 @@ exports.post_one_show =  (req, res, nest) =>{
     Post
         .findById(id)
         .exec()
-        .then(doc =>{
-            console.log(doc);
+        .then(async doc =>{
+            
             if(doc){
-                res.status(200).json({"Single Post Details" : doc});
+                //console.log(doc._id);
+
+                let id = doc.userPostID              
+
+                let response = await User
+                                        .find({ _id: id},{ _id: 0 })
+                                        .select('email name phone')
+                                        .exec()
+                                        .then(user =>{ 
+                                            
+                                            console.log(user);    
+                                            if(user.length > 0){
+                                                return user  
+                                            }else{
+                                                return "Not found User details"
+                                            }                        
+                                        })
+                                        .catch(err =>{
+                                            console.log(err);
+                                            return res.status(500).json({error: err});
+                                        });
+
+
+
+                // wait until all promises resolve
+                let results = await Promise.all(response)
+
+                //console.log(results);        
+                res.status(200).json({"Single Post Details" : { ...doc._doc, results} });
+
             }else{
                 res.status(404).json({message : "No valid entry found for POST ID"});
             }
